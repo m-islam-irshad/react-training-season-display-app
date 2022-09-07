@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import SeasonDisplay from "./Components/SeasonDisplay";
+import Spinner from "./Components/Spinner";
 
 
 // const App = ()=>{
@@ -13,8 +14,8 @@ import SeasonDisplay from "./Components/SeasonDisplay";
 // }
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
+  // constructor(props) {
+  //   super(props)
 
     // This is the only time we do direct assignment to this.state
     // this.state = {lat: null, errorMessage: ""};
@@ -33,7 +34,7 @@ class App extends React.Component {
     //       }
     // );
 
-  }
+  // }
 
 
   state = { lat: null, errorMessage: ""};
@@ -55,19 +56,28 @@ class App extends React.Component {
     console.log("My component was updated - it rerendered");
   }
 
-
-  //React says we have to define render
-  render() {
+  renderContent(){
     if(this.state.errorMessage && !this.state.lat){
-
       return <div>Error: {this.state.errorMessage}</div>
     }
     if(!this.state.errorMessage && this.state.lat){
-      return <div>Latitude: {this.state.lat}</div>
+      // return <div>Latitude: {this.state.lat}</div>
+      return <SeasonDisplay lat={this.state.lat} />
     }
     else{
-      return <div>Loading!!!!!! </div>
+      return (
+          <Spinner message="Please accept location request" />
+      )
     }
+  }
+
+  //React says we have to define render
+  render() {
+    return (
+      <div className="border red">
+        {this.renderContent()}
+      </div>
+    )
     }
 }
 
@@ -81,7 +91,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <App/>
-    <SeasonDisplay/>
+    
   </>
 )
 
